@@ -1,0 +1,21 @@
+volumes:
+  app-db-data:
+
+services:
+  db:
+    restart: unless-stopped
+    image: postgres:15-alpine
+    volumes:
+      - app-db-data:/var/lib/postgresql/data/pgdata
+    env_file:
+      - .env
+
+  backend:
+    restart: unless-stopped
+    depends_on:
+      - db
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: backend.dockerfile
