@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     image: postgres:15-alpine
     volumes:
-      - app-db-data:/var/lib/postgresql/data/pgdata
+      - app-db-data:/var/lib/postgresql/data
     env_file:
       - .env
 
@@ -19,3 +19,5 @@ services:
     build:
       context: .
       dockerfile: backend.dockerfile
+    ports:
+      - 8000:8000

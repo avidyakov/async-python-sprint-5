@@ -1,15 +1,13 @@
-FROM python:3.11-alpine
+FROM python:3.11.0
 
 WORKDIR /app/
 ENV PYTHONPATH=/app
 EXPOSE 8000
 
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | POETRY_HOME=/opt/poetry python && \
-    cd /usr/local/bin && \
-    ln -s /opt/poetry/bin/poetry && \
-    poetry config virtualenvs.create false
+RUN pip install poetry && poetry config virtualenvs.create false
 
 COPY ./pyproject.toml ./poetry.lock* ./
-RUN poetry install --no-root --no-dev
+RUN poetry install --no-root --no-interaction --no-ansi --no-cache
 
 COPY ./ ./
+CMD ["python", "src/main.py"]
