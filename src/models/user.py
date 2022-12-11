@@ -1,8 +1,14 @@
-from tortoise import fields
+import ormar
 
-from models.base import BaseModel
+from models.db import database, metadata
 
 
-class User(BaseModel):
-    full_name = fields.CharField(max_length=255)
-    email = fields.CharField(max_length=255)
+class User(ormar.Model):
+    id: int = ormar.Integer(primary_key=True)
+    full_name: str = ormar.String(max_length=255)
+    email: str = ormar.String(max_length=255)
+
+    class Meta:
+        tablename = 'users'
+        metadata = metadata
+        database = database
