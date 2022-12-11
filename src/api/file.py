@@ -16,3 +16,9 @@ async def create_file(file: UploadFile, path: str | None = Form()):
         path=path,
     )
     return file
+
+
+@router.get('', response_model=list[File])
+async def get_files():
+    files = await File.objects.all()
+    return files
