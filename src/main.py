@@ -11,10 +11,23 @@ app = FastAPI(
     title=config.project_name,
     default_response_class=ORJSONResponse,
 )
-app.state.database = database
 
 app.include_router(router.router)
 add_pagination(app)
+
+
+@app.on_event('startup')
+async def startup() -> None:
+    # database_ = app.state.database
+    if not database.is_connected:
+        await database.connect()
+
+
+@app.on_event('shutdown')
+async def shutdown() -> None:
+    # database_ = app.state.database
+    if database.is_connected:
+        await database.disconnect()
 
 
 if __name__ == '__main__':
