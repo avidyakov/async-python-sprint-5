@@ -27,6 +27,7 @@ def upgrade() -> None:
         sa.Column('created_at', sa.DateTime(), nullable=True),
         sa.PrimaryKeyConstraint('id'),
     )
+    op.create_unique_constraint(None, 'files', ['path'])
     # ### end Alembic commands ###
 
 

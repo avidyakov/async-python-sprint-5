@@ -1,6 +1,9 @@
 from pathlib import Path
 
+import asyncpg
+import ormar
 from fastapi import APIRouter, Form, HTTPException, UploadFile
+from starlette.responses import FileResponse
 
 from config import config
 from models import File
@@ -12,22 +15,25 @@ router = APIRouter(
 
 
 @router.post('', response_model=File)
-async def create_file(file: UploadFile, path: Path = Form(default='./')):
-    if path.is_absolute():
-        raise HTTPException(status_code=400, detail='Path must be relative')
+async def create_file(file: UploadFile, path: str = Form(default='')):
+    path = (config.media_dir / path.removeprefix('/')).resolve()
+    if not path.suffix:
+        path /= file.filename
 
-    path = (config.media_dir / path / file.filename).resolve()
     if not path.is_relative_to(config.media_dir):
         raise HTTPException(
             status_code=400, detail='Path must be inside root dir'
         )
 
     content = await file.read()
-    saved_file = await File.objects.create(
-        name=file.filename,
-        size=len(content),
-        path=path.relative_to(config.media_dir).as_posix(),
-    )
+    try:
+        saved_file = await File.objects.create(
+            name=file.filename,
+            size=len(content),
+            path=path.relative_to(config.media_dir).as_posix(),
+        )
+    except asyncpg.exceptions.UniqueViolationError:
+        raise HTTPException(status_code=409, detail='File already exists')
 
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_bytes(content)
@@ -36,5 +42,13 @@ async def create_file(file: UploadFile, path: Path = Form(default='./')):
 
 @router.get('', response_model=list[File])
 async def get_files():
-    files = await File.objects.all()
-    return files
+    return await File.objects.all()
+
+
+@router.get('/{file_id}')
+async def get_file_by_id(file_id: int):
+    try:
+        file = await File.objects.get(id=file_id)
+        return FileResponse(config.media_dir / file.path)
+    except ormar.NoMatch:
+        raise HTTPException(status_code=404, detail='File not found')
