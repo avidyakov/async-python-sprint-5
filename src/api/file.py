@@ -1,9 +1,10 @@
-from pathlib import Path
+import io
+import zipfile
 
 import asyncpg
 import ormar
-from fastapi import APIRouter, Form, HTTPException, UploadFile
-from starlette.responses import FileResponse
+from fastapi import APIRouter, Form, Header, HTTPException, UploadFile
+from starlette.responses import FileResponse, StreamingResponse
 
 from config import config
 from models import File
@@ -45,10 +46,29 @@ async def get_files():
     return await File.objects.all()
 
 
-@router.get('/{file_id}')
-async def get_file_by_id(file_id: int):
-    try:
-        file = await File.objects.get(id=file_id)
-        return FileResponse(config.media_dir / file.path)
-    except ormar.NoMatch:
-        raise HTTPException(status_code=404, detail='File not found')
+@router.get('/{path_or_id:path}')
+async def get_file_by_path(
+    path_or_id: str,
+    accept: str = Header(default=''),
+):
+    if path_or_id.isnumeric():
+        try:
+            file = await File.objects.get(id=int(path_or_id))
+            return FileResponse(config.media_dir / file.path)
+        except ormar.NoMatch:
+            raise HTTPException(status_code=404, detail='File not found')
+
+    path = (config.media_dir / path_or_id).resolve()
+    if path.is_file():
+        return FileResponse(path)
+
+    if path.is_dir():
+        zip_buffer = io.BytesIO()
+        with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
+            for file in path.iterdir():
+                zip_file.write(file, file.relative_to(path))
+
+        zip_buffer.seek(0)
+        return StreamingResponse(zip_buffer, media_type='application/zip')
+
+    raise HTTPException(status_code=404, detail='Files not found')
