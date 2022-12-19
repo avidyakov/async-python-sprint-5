@@ -1,12 +1,4 @@
 [[package]]
-name = "aiofiles"
-version = "22.1.0"
-description = "File support for asyncio."
-category = "main"
-optional = false
-python-versions = ">=3.7,<4.0"
-
-[[package]]
 name = "aiohttp"
 version = "3.8.3"
 description = "Async http client/server framework (asyncio)"
@@ -39,7 +31,7 @@ frozenlist = ">=1.1.0"
 
 [[package]]
 name = "alembic"
-version = "1.8.1"
+version = "1.9.0"
 description = "A database migration tool for SQLAlchemy."
 category = "main"
 optional = false
@@ -115,38 +107,6 @@ python-versions = ">=3.6"
 [package.extras]
 tests = ["pytest (>=3.2.1,!=3.3.0)"]
 typecheck = ["mypy"]
-
-[[package]]
-name = "boto3"
-version = "1.26.27"
-description = "The AWS SDK for Python"
-category = "main"
-optional = false
-python-versions = ">= 3.7"
-
-[package.dependencies]
-botocore = ">=1.29.27,<1.30.0"
-jmespath = ">=0.7.1,<2.0.0"
-s3transfer = ">=0.6.0,<0.7.0"
-
-[package.extras]
-crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
-
-[[package]]
-name = "botocore"
-version = "1.29.27"
-description = "Low-level, data-driven core of boto 3."
-category = "main"
-optional = false
-python-versions = ">= 3.7"
-
-[package.dependencies]
-jmespath = ">=0.7.1,<2.0.0"
-python-dateutil = ">=2.1,<3.0.0"
-urllib3 = ">=1.25.4,<1.27"
-
-[package.extras]
-crt = ["awscrt (==0.15.3)"]
 
 [[package]]
 name = "cffi"
@@ -276,34 +236,6 @@ doc = ["mdx-include (>=1.4.1,<2.0.0)", "mkdocs (>=1.1.2,<2.0.0)", "mkdocs-markdo
 test = ["anyio[trio] (>=3.2.1,<4.0.0)", "black (==22.10.0)", "coverage[toml] (>=6.5.0,<7.0)", "databases[sqlite] (>=0.3.2,<0.7.0)", "email-validator (>=1.1.1,<2.0.0)", "flask (>=1.1.2,<3.0.0)", "httpx (>=0.23.0,<0.24.0)", "isort (>=5.0.6,<6.0.0)", "mypy (==0.982)", "orjson (>=3.2.1,<4.0.0)", "passlib[bcrypt] (>=1.7.2,<2.0.0)", "peewee (>=3.13.3,<4.0.0)", "pytest (>=7.1.3,<8.0.0)", "python-jose[cryptography] (>=3.3.0,<4.0.0)", "python-multipart (>=0.0.5,<0.0.6)", "pyyaml (>=5.3.1,<7.0.0)", "ruff (==0.0.138)", "sqlalchemy (>=1.3.18,<=1.4.41)", "types-orjson (==3.6.2)", "types-ujson (==5.5.0)", "ujson (>=4.0.1,!=4.0.2,!=4.1.0,!=4.2.0,!=4.3.0,!=5.0.0,!=5.1.0,<6.0.0)"]
 
 [[package]]
-name = "fastapi-pagination"
-version = "0.11.0"
-description = "FastAPI pagination"
-category = "main"
-optional = false
-python-versions = ">=3.8,<4.0"
-
-[package.dependencies]
-fastapi = ">=0.80.0"
-pydantic = ">=1.9.1"
-
-[package.extras]
-all = ["SQLAlchemy (>=1.3.20)", "asyncpg (>=0.24.0)", "beanie (>=1.11.9,<2.0.0)", "databases (>=0.6.0)", "django (<5.0.0)", "mongoengine (>=0.23.1,<0.25.0)", "motor (>=2.5.1,<4.0.0)", "orm (>=0.3.1)", "ormar (>=0.11.2)", "piccolo (>=0.89,<0.98)", "pony (>=0.7.16,<0.8.0)", "scylla-driver (>=3.25.6,<4.0.0)", "sqlakeyset (>=1.0.1659142803,<2.0.0)", "sqlmodel (>=0.0.8,<0.0.9)", "tortoise-orm (>=0.16.18,<0.20.0)"]
-asyncpg = ["SQLAlchemy (>=1.3.20)", "asyncpg (>=0.24.0)"]
-beanie = ["beanie (>=1.11.9,<2.0.0)"]
-databases = ["databases (>=0.6.0)"]
-django = ["databases (>=0.6.0)", "django (<5.0.0)"]
-mongoengine = ["mongoengine (>=0.23.1,<0.25.0)"]
-motor = ["motor (>=2.5.1,<4.0.0)"]
-orm = ["databases (>=0.6.0)", "orm (>=0.3.1)"]
-ormar = ["ormar (>=0.11.2)"]
-piccolo = ["piccolo (>=0.89,<0.98)"]
-scylla-driver = ["scylla-driver (>=3.25.6,<4.0.0)"]
-sqlalchemy = ["SQLAlchemy (>=1.3.20)", "sqlakeyset (>=1.0.1659142803,<2.0.0)"]
-sqlmodel = ["sqlakeyset (>=1.0.1659142803,<2.0.0)", "sqlmodel (>=0.0.8,<0.0.9)"]
-tortoise = ["tortoise-orm (>=0.16.18,<0.20.0)"]
-
-[[package]]
 name = "fastapi-users"
 version = "10.2.1"
 description = "Ready-to-use and customizable users management for FastAPI"
@@ -360,14 +292,6 @@ description = "Internationalized Domain Names in Applications (IDNA)"
 category = "main"
 optional = false
 python-versions = ">=3.5"
-
-[[package]]
-name = "jmespath"
-version = "1.0.1"
-description = "JSON Matching Expressions"
-category = "main"
-optional = false
-python-versions = ">=3.7"
 
 [[package]]
 name = "makefun"
@@ -506,17 +430,6 @@ docs = ["sphinx (>=4.5.0,<5.0.0)", "sphinx-rtd-theme", "zope.interface"]
 tests = ["coverage[toml] (==5.0.4)", "pytest (>=6.0.0,<7.0.0)"]
 
 [[package]]
-name = "python-dateutil"
-version = "2.8.2"
-description = "Extensions to the standard Python datetime module"
-category = "main"
-optional = false
-python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
-
-[package.dependencies]
-six = ">=1.5"
-
-[[package]]
 name = "python-multipart"
 version = "0.0.5"
 description = "A streaming multipart parser for Python"
@@ -526,20 +439,6 @@ python-versions = "*"
 
 [package.dependencies]
 six = ">=1.4.0"
-
-[[package]]
-name = "s3transfer"
-version = "0.6.0"
-description = "An Amazon S3 Transfer Manager"
-category = "main"
-optional = false
-python-versions = ">= 3.7"
-
-[package.dependencies]
-botocore = ">=1.12.36,<2.0a.0"
-
-[package.extras]
-crt = ["botocore[crt] (>=1.20.29,<2.0a.0)"]
 
 [[package]]
 name = "six"
@@ -612,19 +511,6 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
-name = "urllib3"
-version = "1.26.13"
-description = "HTTP library with thread-safe connection pooling, file post, and more."
-category = "main"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
-
-[package.extras]
-brotli = ["brotli (>=1.0.9)", "brotlicffi (>=0.8.0)", "brotlipy (>=0.6.0)"]
-secure = ["certifi", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "ipaddress", "pyOpenSSL (>=0.14)", "urllib3-secure-extra"]
-socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
-
-[[package]]
 name = "uvicorn"
 version = "0.20.0"
 description = "The lightning-fast ASGI server."
@@ -654,13 +540,9 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.11"
-content-hash = "5c0b6a8633404c45dc1b985cc811d5093afca43cfc83f737c643f05fabec27fe"
+content-hash = "ff22f1f5f58144b6b1dc4c5dca5fcfded026b04ab3bd6fa1b95b90055dec6471"
 
 [metadata.files]
-aiofiles = [
-    {file = "aiofiles-22.1.0-py3-none-any.whl", hash = "sha256:1142fa8e80dbae46bb6339573ad4c8c0841358f79c6eb50a493dceca14621bad"},
-    {file = "aiofiles-22.1.0.tar.gz", hash = "sha256:9107f1ca0b2a5553987a94a3c9959fe5b491fdf731389aa5b7b1bd0733e32de6"},
-]
 aiohttp = [
     {file = "aiohttp-3.8.3-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:ba71c9b4dcbb16212f334126cc3d8beb6af377f6703d9dc2d9fb3874fd667ee9"},
     {file = "aiohttp-3.8.3-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:d24b8bb40d5c61ef2d9b6a8f4528c2f17f1c5d2d31fed62ec860f6006142e83e"},
@@ -755,8 +637,8 @@ aiosignal = [
     {file = "aiosignal-1.3.1.tar.gz", hash = "sha256:54cd96e15e1649b75d6c87526a6ff0b6c1b0dd3459f43d9ca11d48c339b68cfc"},
 ]
 alembic = [
-    {file = "alembic-1.8.1-py3-none-any.whl", hash = "sha256:0a024d7f2de88d738d7395ff866997314c837be6104e90c5724350313dee4da4"},
-    {file = "alembic-1.8.1.tar.gz", hash = "sha256:cd0b5e45b14b706426b833f06369b9a6d5ee03f826ec3238723ce8caaf6e5ffa"},
+    {file = "alembic-1.9.0-py3-none-any.whl", hash = "sha256:e8ce855f731d92cfdbf9a71d148401fcc420399927817c6e2c0b6a5f31db745d"},
+    {file = "alembic-1.9.0.tar.gz", hash = "sha256:6af6792fe699730b27480382701b16028ebbaac6bc5cd4f06daf5fa3e4690364"},
 ]
 anyio = [
     {file = "anyio-3.6.2-py3-none-any.whl", hash = "sha256:fbbe32bd270d2a2ef3ed1c5d45041250284e31fc0a4df4a5a6071842051a51e3"},
@@ -830,14 +712,6 @@ bcrypt = [
     {file = "bcrypt-4.0.1-pp39-pypy39_pp73-manylinux_2_24_x86_64.whl", hash = "sha256:2b3ac11cf45161628f1f3733263e63194f22664bf4d0c0f3ab34099c02134665"},
     {file = "bcrypt-4.0.1-pp39-pypy39_pp73-manylinux_2_28_x86_64.whl", hash = "sha256:3100851841186c25f127731b9fa11909ab7b1df6fc4b9f8353f4f1fd952fbf71"},
     {file = "bcrypt-4.0.1.tar.gz", hash = "sha256:27d375903ac8261cfe4047f6709d16f7d18d39b1ec92aaf72af989552a650ebd"},
-]
-boto3 = [
-    {file = "boto3-1.26.27-py3-none-any.whl", hash = "sha256:6d633563802065dba2ccab48c6cab3213ca2f672ade10d096db62f686f11ea9b"},
-    {file = "boto3-1.26.27.tar.gz", hash = "sha256:255a7565226c21c5d500f69aabb977e1ac07dbaf576f4428d00558e8e508a23b"},
-]
-botocore = [
-    {file = "botocore-1.29.27-py3-none-any.whl", hash = "sha256:03ead47c52c5caee4c69498a655444569e9d86c0e15e3884ce8c3eca01b4f658"},
-    {file = "botocore-1.29.27.tar.gz", hash = "sha256:0932b22d8737b11037adf7e734f9b90425b575d0757e4c1a035e99f382955221"},
 ]
 cffi = [
     {file = "cffi-1.15.1-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:a66d3508133af6e8548451b25058d5812812ec3798c886bf38ed24a98216fab2"},
@@ -960,10 +834,6 @@ email-validator = [
 fastapi = [
     {file = "fastapi-0.88.0-py3-none-any.whl", hash = "sha256:263b718bb384422fe3d042ffc9a0c8dece5e034ab6586ff034f6b4b1667c3eee"},
     {file = "fastapi-0.88.0.tar.gz", hash = "sha256:915bf304180a0e7c5605ec81097b7d4cd8826ff87a02bb198e336fb9f3b5ff02"},
-]
-fastapi-pagination = [
-    {file = "fastapi_pagination-0.11.0-py3-none-any.whl", hash = "sha256:1ea88688164e7f7887858c94e046225c4456fa0ffae8dc01267f650d4d1f5dd0"},
-    {file = "fastapi_pagination-0.11.0.tar.gz", hash = "sha256:f05e3dba09f1db51a7d15c220a7fb34c174d72c757b7295e8df2f1abd40fd578"},
 ]
 fastapi-users = [
     {file = "fastapi_users-10.2.1-py3-none-any.whl", hash = "sha256:4805f352a74e038ad2bb6bdff516975cc67f860b15b82625b91375691de8494a"},
@@ -1114,10 +984,6 @@ h11 = [
 idna = [
     {file = "idna-3.4-py3-none-any.whl", hash = "sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2"},
     {file = "idna-3.4.tar.gz", hash = "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"},
-]
-jmespath = [
-    {file = "jmespath-1.0.1-py3-none-any.whl", hash = "sha256:02e2e4cc71b5bcab88332eebf907519190dd9e6e82107fa7f83b1003a6252980"},
-    {file = "jmespath-1.0.1.tar.gz", hash = "sha256:90261b206d6defd58fdd5e85f478bf633a2901798906be2ad389150c5c60edbe"},
 ]
 makefun = [
     {file = "makefun-1.15.0-py2.py3-none-any.whl", hash = "sha256:d79319f9e71b6825ca163be0afa45cbc5b1215e682efa35b2d355a03c594279c"},
@@ -1418,16 +1284,8 @@ pyjwt = [
     {file = "PyJWT-2.6.0-py3-none-any.whl", hash = "sha256:d83c3d892a77bbb74d3e1a2cfa90afaadb60945205d1095d9221f04466f64c14"},
     {file = "PyJWT-2.6.0.tar.gz", hash = "sha256:69285c7e31fc44f68a1feb309e948e0df53259d579295e6cfe2b1792329f05fd"},
 ]
-python-dateutil = [
-    {file = "python-dateutil-2.8.2.tar.gz", hash = "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86"},
-    {file = "python_dateutil-2.8.2-py2.py3-none-any.whl", hash = "sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9"},
-]
 python-multipart = [
     {file = "python-multipart-0.0.5.tar.gz", hash = "sha256:f7bb5f611fc600d15fa47b3974c8aa16e93724513b49b5f95c81e6624c83fa43"},
-]
-s3transfer = [
-    {file = "s3transfer-0.6.0-py3-none-any.whl", hash = "sha256:06176b74f3a15f61f1b4f25a1fc29a4429040b7647133a463da8fa5bd28d5ecd"},
-    {file = "s3transfer-0.6.0.tar.gz", hash = "sha256:2ed07d3866f523cc561bf4a00fc5535827981b117dd7876f036b0c1aca42c947"},
 ]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
@@ -1487,10 +1345,6 @@ starlette = [
 typing-extensions = [
     {file = "typing_extensions-4.4.0-py3-none-any.whl", hash = "sha256:16fa4864408f655d35ec496218b85f79b3437c829e93320c7c9215ccfd92489e"},
     {file = "typing_extensions-4.4.0.tar.gz", hash = "sha256:1511434bb92bf8dd198c12b1cc812e800d4181cfcb867674e0f8279cc93087aa"},
-]
-urllib3 = [
-    {file = "urllib3-1.26.13-py2.py3-none-any.whl", hash = "sha256:47cc05d99aaa09c9e72ed5809b60e7ba354e64b59c9c173ac3018642d8bb41fc"},
-    {file = "urllib3-1.26.13.tar.gz", hash = "sha256:c083dd0dce68dbfbe1129d5271cb90f9447dea7d52097c6e0126120c521ddea8"},
 ]
 uvicorn = [
     {file = "uvicorn-0.20.0-py3-none-any.whl", hash = "sha256:c3ed1598a5668208723f2bb49336f4509424ad198d6ab2615b7783db58d919fd"},
