@@ -5,7 +5,6 @@ from models.user import User
 __all__ = (
     'database',
     'metadata',
-    # 'engine',
     'User',
     'File',
 )

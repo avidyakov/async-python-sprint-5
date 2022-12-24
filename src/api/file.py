@@ -1,28 +1,35 @@
 import io
 import zipfile
-from pathlib import Path
 
 import asyncpg
 import ormar
-from fastapi import APIRouter, Form, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, Form, HTTPException, UploadFile
 from starlette.responses import FileResponse, StreamingResponse
 
+from api.users import get_current_active_user
 from config import config
-from models import File
+from models import File, User
 
 router = APIRouter(
     prefix='/files',
     tags=['files'],
 )
 
+FileSchema = File.get_pydantic(exclude={'user'})
 
-@router.post('', response_model=File)
-async def create_file(file: UploadFile, path: str = Form(default='')):
-    path = (config.media_dir / path.removeprefix('/')).resolve()
+
+@router.post('', response_model=FileSchema)
+async def create_file(
+    file: UploadFile,
+    path: str = Form(default=''),
+    user: User = Depends(get_current_active_user),
+):
+    user_dir = config.media_dir / str(user.id)
+    path = (user_dir / path.removeprefix('/')).resolve()
     if not path.suffix:
         path /= file.filename
 
-    if not path.is_relative_to(config.media_dir):
+    if not path.is_relative_to(user_dir):
         raise HTTPException(
             status_code=400, detail='Path must be inside root dir'
         )
@@ -32,7 +39,8 @@ async def create_file(file: UploadFile, path: str = Form(default='')):
         saved_file = await File.objects.create(
             name=file.filename,
             size=len(content),
-            path=path.relative_to(config.media_dir).as_posix(),
+            path=path.relative_to(user_dir).as_posix(),
+            user=user,
         )
     except asyncpg.exceptions.UniqueViolationError:
         raise HTTPException(status_code=409, detail='File already exists')
@@ -42,21 +50,23 @@ async def create_file(file: UploadFile, path: str = Form(default='')):
     return saved_file
 
 
-@router.get('', response_model=list[File])
-async def get_files():
-    return await File.objects.all()
+@router.get('', response_model=list[FileSchema])
+async def get_files(user: User = Depends(get_current_active_user)):
+    return await user.files.all()
 
 
 @router.get('/{path_or_id:path}')
-async def get_file_by_path(path_or_id: str):
+async def get_file_by_path(
+    path_or_id: str, user: User = Depends(get_current_active_user)
+):
     if path_or_id.isnumeric():
         try:
             file = await File.objects.get(id=int(path_or_id))
-            return FileResponse(config.media_dir / file.path)
+            return FileResponse(config.media_dir / str(user.id) / file.path)
         except ormar.NoMatch:
             raise HTTPException(status_code=404, detail='File not found')
 
-    path = (config.media_dir / path_or_id).resolve()
+    path = (config.media_dir / str(user.id) / path_or_id).resolve()
     if path.is_file():
         return FileResponse(path)
 
