@@ -10,4 +10,5 @@ COPY ./pyproject.toml ./poetry.lock* ./
 RUN poetry install --no-root --no-interaction --no-ansi --no-cache
 
 COPY ./ ./
-CMD ["python", "src/main.py"]
+
+ENTRYPOINT . ./entrypoint.sh
