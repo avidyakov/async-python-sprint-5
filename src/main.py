@@ -2,7 +2,6 @@ import aiohttp
 import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
-from fastapi_pagination import add_pagination
 
 from api.router import router
 from config import config
@@ -15,7 +14,6 @@ app = FastAPI(
 
 session = aiohttp.ClientSession()
 app.include_router(router)
-add_pagination(app)
 
 
 @app.on_event('startup')

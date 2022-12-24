@@ -1,9 +1,10 @@
 import io
 import zipfile
+from pathlib import Path
 
 import asyncpg
 import ormar
-from fastapi import APIRouter, Form, Header, HTTPException, UploadFile
+from fastapi import APIRouter, Form, HTTPException, UploadFile
 from starlette.responses import FileResponse, StreamingResponse
 
 from config import config
@@ -47,10 +48,7 @@ async def get_files():
 
 
 @router.get('/{path_or_id:path}')
-async def get_file_by_path(
-    path_or_id: str,
-    accept: str = Header(default=''),
-):
+async def get_file_by_path(path_or_id: str):
     if path_or_id.isnumeric():
         try:
             file = await File.objects.get(id=int(path_or_id))
