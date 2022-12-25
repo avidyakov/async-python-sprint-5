@@ -1,5 +1,6 @@
 import io
 import zipfile
+from pathlib import Path
 
 import asyncpg
 import ormar
@@ -61,7 +62,7 @@ async def get_file_by_path(
 ):
     if path_or_id.isnumeric():
         try:
-            file = await File.objects.get(id=int(path_or_id))
+            file = await File.objects.get(id=int(path_or_id), user=user)
             return FileResponse(config.media_dir / str(user.id) / file.path)
         except ormar.NoMatch:
             raise HTTPException(status_code=404, detail='File not found')
@@ -71,12 +72,22 @@ async def get_file_by_path(
         return FileResponse(path)
 
     if path.is_dir():
-        zip_buffer = io.BytesIO()
-        with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
-            for file in path.iterdir():
-                zip_file.write(file, file.relative_to(path))
-
-        zip_buffer.seek(0)
-        return StreamingResponse(zip_buffer, media_type='application/zip')
+        return StreamingResponse(_get_zip(path), media_type='application/zip')
 
     raise HTTPException(status_code=404, detail='Files not found')
+
+
+def _get_zip(path: Path):
+    def _write(dir_path: Path):
+        for file in dir_path.iterdir():
+            if file.is_file():
+                zip_file.write(file, file.relative_to(path))
+            elif file.is_dir():
+                _write(file)
+
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, 'w') as zip_file:
+        _write(path)
+
+    buffer.seek(0)
+    return buffer

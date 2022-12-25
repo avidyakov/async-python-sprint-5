@@ -11,4 +11,4 @@ RUN poetry install --no-root --no-interaction --no-ansi --no-cache
 
 COPY ./ ./
 
-ENTRYPOINT . ./entrypoint.sh
+CMD (cd src && alembic upgrade head) && python src/main.py
